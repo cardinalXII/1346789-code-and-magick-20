@@ -2,8 +2,8 @@
 
 var NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 var SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
+var COATCOLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+var EYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
 var SETUP_WINDOW = document.querySelector('.setup');
 
 
@@ -26,48 +26,33 @@ for (var j = 0; j < NAMES.length; j++) {
   var nameOut = NAMES[randomIndexName];
   var surnameOut = SURNAMES[randomIndexSurname];
 
-  var nameWizard = nameOut + surnameOut;
+  var nameWizard = nameOut + " " + surnameOut;
 
   names.push(nameWizard);
 }
 // генерация случайного цветс глаз
 var colors = [];
-for (var w = 0; w < coatColor.length; w++) {
-  var randomIndexColor = Math.floor(Math.random() * coatColor.length);
-  var coatWizard = coatColor[randomIndexColor];
+for (var w = 0; w < NAMES.length; w++) {
+  var randomIndexColor = Math.floor(Math.random() * COATCOLORS.length);
+  var coatWizard = COATCOLORS[randomIndexColor];
   colors.push(coatWizard);
 }
 // генерация случайного цвета глаз
 var eyes = [];
-for (var x = 0; x < coatColor.length; x++) {
-  var randomIndexEye = Math.floor(Math.random() * eyesColor.length);
-  var eyesWizard = eyesColor[randomIndexEye];
+for (var x = 0; x < NAMES.length; x++) {
+  var randomIndexEye = Math.floor(Math.random() * EYESCOLORS.length);
+  var eyesWizard = EYESCOLORS[randomIndexEye];
   eyes.push(eyesWizard);
 }
 
 // массив параметров персонажа
-var wizards = [
-  {
-    name: names[0],
-    coatColor: colors[0],
-    eyesColor: eyes[0]
-  },
-  {
-    name: names[1],
-    coatColor: colors[1],
-    eyesColor: eyes[1]
-  },
-  {
-    name: names[2],
-    coatColor: colors[2],
-    eyesColor: eyes[2]
-  },
-  {
-    name: names[3],
-    coatColor: colors[3],
-    eyesColor: eyes[3]
-  }
-];
+var wizards = [];
+for (var y = 0; y < 4; y++) { // по условию ТЗ ограничено 4 персонажами, вслучае увеличения количества персонажей рекомендуется использовать y < NAMES.length вместо y < 4
+  wizards.push({name: names[y],
+    coatColor: colors[y],
+    eyesColor: eyes[y]
+})
+}
 // создаем персонажей
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
