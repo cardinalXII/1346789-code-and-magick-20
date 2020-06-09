@@ -26,7 +26,7 @@ for (var j = 0; j < NAMES.length; j++) {
   var nameOut = NAMES[randomIndexName];
   var surnameOut = SURNAMES[randomIndexSurname];
 
-  var nameWizard = nameOut + " " + surnameOut;
+  var nameWizard = nameOut + ' ' + surnameOut;
 
   names.push(nameWizard);
 }
@@ -51,7 +51,7 @@ for (var y = 0; y < 4; y++) { // по условию ТЗ ограничено 4
   wizards.push({name: names[y],
     coatColor: colors[y],
     eyesColor: eyes[y]
-})
+  });
 }
 // создаем персонажей
 var renderWizard = function (wizard) {
