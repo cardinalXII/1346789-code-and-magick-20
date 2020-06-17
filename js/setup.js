@@ -4,7 +4,7 @@ var NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Крис�
 var SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COATCOLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var FIREBALLCOLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
+var FIREBALLCOLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var WINDOW = document.querySelector('.setup');
 var SETUP_OPEN = document.querySelector('.setup-open');
@@ -19,7 +19,7 @@ var COAT = WIZARD.querySelector('.wizard-coat');
 var EYES = WIZARD.querySelector('.wizard-eyes');
 var FIREBALL = WINDOW.querySelector('.setup-fireball-wrap');
 
-//при нажатии esc проверять обработчик
+// при нажатии esc проверять обработчик
 var onPopupEscPress = function (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -27,15 +27,15 @@ var onPopupEscPress = function (evt) {
   }
 };
 
-//функция открытия
+// функция открытия
 var openPopup = function () {
   // Показать окно
   WINDOW.classList.remove('hidden');
 
   // Добавить обработчики для закрытия
-   document.addEventListener('keydown', onPopupEscPress);
+  document.addEventListener('keydown', onPopupEscPress);
 };
-//функция закрытия
+// функция закрытия
 var closePopup = function () {
   // Скрыть окно
   WINDOW.classList.add('hidden');
@@ -52,7 +52,7 @@ SETUP_OPEN.addEventListener('click', function () {
 // активация окна установок клавиша
 SETUP_OPEN.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    openPopup();;
+    openPopup();
   }
 });
 // Деактивация окна установок клик
@@ -61,16 +61,16 @@ SETUP_CLOSE.addEventListener('click', function () {
 });
 // Деактивация окна установок клавиша
 SETUP_CLOSE.addEventListener('keydown', function (evt) {
-   if (evt.key === 'Enter') {
-   closePopup();
+  if (evt.key === 'Enter') {
+    closePopup();
   }
 });
 // Блокирует escape при фокусе на имени
-USER_NAME_INPUT.addEventListener('focus', function(){
+USER_NAME_INPUT.addEventListener('focus', function () {
   document.removeEventListener('keydown', onPopupEscPress);
 });
 // Разблокирует escape при фокусе на имени
-USER_NAME_INPUT.addEventListener('blur', function(){
+USER_NAME_INPUT.addEventListener('blur', function () {
   document.addEventListener('keydown', onPopupEscPress);
 });
 
@@ -88,7 +88,7 @@ USER_NAME_INPUT.addEventListener('invalid', function () {
 
     USER_NAME_INPUT.setCustomValidity('Обязательное поле');
 
-  }else {
+  } else {
 
     USER_NAME_INPUT.setCustomValidity('');
   }
@@ -99,11 +99,11 @@ USER_NAME_INPUT.addEventListener('input', function () {
 
   if (valueLength < MIN_NAME_LENGTH) {
 
-    USER_NAME_INPUT.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+    USER_NAME_INPUT.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
 
   } else if (valueLength > MAX_NAME_LENGTH) {
 
-    USER_NAME_INPUT.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+    USER_NAME_INPUT.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) + ' симв.');
 
   } else {
 
@@ -111,7 +111,22 @@ USER_NAME_INPUT.addEventListener('input', function () {
   }
 });
 
-
+// смена цвета мантии
+COAT.addEventListener('click', function () {
+  COAT.style.fill = colors[z];
+  change();
+});
+// смена цвета глаз
+EYES.addEventListener('click', function () {
+  EYES.style.fill = eyes[z];
+  change();
+});
+// смена цвета фаербола
+FIREBALL.addEventListener('click', function () {
+  FIREBALL.querySelector('input').value = fierballs[z];
+  FIREBALL.style.backgroundColor = fierballs[z];
+  change();
+});
 
 // показываем меню выбора персонажей
 document.querySelector('.setup-similar').classList.remove('hidden');
@@ -149,11 +164,20 @@ for (var x = 0; x < NAMES.length; x++) {
 }
 // генерация случайного цвета файербола
 var fierballs = [];
-for (var f = 0; f < FIREBALLCOLORS.length; f++) {
+for (var f = 0; f < NAMES.length; f++) {
   var randomIndexfierball = Math.floor(Math.random() * FIREBALLCOLORS.length);
   var fierballsWizard = FIREBALLCOLORS[randomIndexfierball];
   fierballs.push(fierballsWizard);
 }
+// генерация числа для выбора цвета мантии глаз и файербола из массива
+var z = 0;
+var change = function () {
+  if (z < 8) {
+    z++;
+  } else {
+    z = 0;
+  }
+};
 // массив параметров персонажа
 var wizards = [];
 for (var y = 0; y < 4; y++) { // по условию ТЗ ограничено 4 персонажами, вслучае увеличения количества персонажей рекомендуется использовать y < NAMES.length вместо y < 4
@@ -181,28 +205,3 @@ similarListElement.appendChild(fragment);
 
 WINDOW.querySelector('.setup-similar').classList.remove('hidden');
 
-// смена цвета мантии
-var changeColorCoat = function (w) {
-  var w = 0;
-  COAT.style.fill = colors[w];
-};
-// смена цвета глаз
-var changeColorEyes = function (x) {
-  var x = 0;
-  EYES.style.fill = eyes[x];
-};
-// смена цвета фаербола
-var changeColorFireball = function (f) {
-  var f = 0;
-  FIREBALL.querySelector('input').value = fierballs[f];
-  FIREBALL.style.backgroundColor = fierballs[f];
-};
-COAT.addEventListener('click', function () {
-    changeColorCoat(w++);
-});
-EYES.addEventListener('click', function () {
-    changeColorEyes(x++);
-});
-FIREBALL.addEventListener('click', function () {
-    changeColorFireball(f++);
-});
